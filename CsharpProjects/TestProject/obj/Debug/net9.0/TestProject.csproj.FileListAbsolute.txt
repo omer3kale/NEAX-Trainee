@@ -1,0 +1,14 @@
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\CsharpProjects\TestProject\bin\Debug\net9.0\TestProject.exe
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\CsharpProjects\TestProject\bin\Debug\net9.0\TestProject.deps.json
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\CsharpProjects\TestProject\bin\Debug\net9.0\TestProject.runtimeconfig.json
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\CsharpProjects\TestProject\bin\Debug\net9.0\TestProject.dll
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\CsharpProjects\TestProject\bin\Debug\net9.0\TestProject.pdb
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\CsharpProjects\TestProject\obj\Debug\net9.0\TestProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\CsharpProjects\TestProject\obj\Debug\net9.0\TestProject.AssemblyInfoInputs.cache
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\CsharpProjects\TestProject\obj\Debug\net9.0\TestProject.AssemblyInfo.cs
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\CsharpProjects\TestProject\obj\Debug\net9.0\TestProject.csproj.CoreCompileInputs.cache
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\CsharpProjects\TestProject\obj\Debug\net9.0\TestProject.dll
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\CsharpProjects\TestProject\obj\Debug\net9.0\refint\TestProject.dll
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\CsharpProjects\TestProject\obj\Debug\net9.0\TestProject.pdb
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\CsharpProjects\TestProject\obj\Debug\net9.0\TestProject.genruntimeconfig.cache
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\CsharpProjects\TestProject\obj\Debug\net9.0\ref\TestProject.dll

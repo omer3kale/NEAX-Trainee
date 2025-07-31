@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ÖmerÜckale\\OneDrive - NEA X GmbH\\Desktop\\vs code files\\CsharpProjects\\TestProject\\TestProject.csproj",
+      "projectUniqueName": "C:\\Users\\ÖmerÜckale\\OneDrive - NEA X GmbH\\Desktop\\vs code files\\newcsharp\\CsharpProjects\\TestProject\\TestProject.csproj",
       "projectName": "TestProject",
-      "projectPath": "C:\\Users\\ÖmerÜckale\\OneDrive - NEA X GmbH\\Desktop\\vs code files\\CsharpProjects\\TestProject\\TestProject.csproj",
+      "projectPath": "C:\\Users\\ÖmerÜckale\\OneDrive - NEA X GmbH\\Desktop\\vs code files\\newcsharp\\CsharpProjects\\TestProject\\TestProject.csproj",
       "packagesPath": "C:\\Users\\ÖmerÜckale\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ÖmerÜckale\\OneDrive - NEA X GmbH\\Desktop\\vs code files\\CsharpProjects\\TestProject\\obj\\",
+      "outputPath": "C:\\Users\\ÖmerÜckale\\OneDrive - NEA X GmbH\\Desktop\\vs code files\\newcsharp\\CsharpProjects\\TestProject\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
