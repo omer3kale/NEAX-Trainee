@@ -1,0 +1,14 @@
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\c#debug\c#debug.AppHost\bin\Debug\net9.0\c#debug.AppHost.exe
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\c#debug\c#debug.AppHost\bin\Debug\net9.0\c#debug.AppHost.deps.json
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\c#debug\c#debug.AppHost\bin\Debug\net9.0\c#debug.AppHost.runtimeconfig.json
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\c#debug\c#debug.AppHost\bin\Debug\net9.0\c#debug.AppHost.dll
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\c#debug\c#debug.AppHost\bin\Debug\net9.0\c#debug.AppHost.pdb
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\c#debug\c#debug.AppHost\obj\Debug\net9.0\c#debug.AppHost.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\c#debug\c#debug.AppHost\obj\Debug\net9.0\c#debug.AppHost.AssemblyInfoInputs.cache
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\c#debug\c#debug.AppHost\obj\Debug\net9.0\c#debug.AppHost.AssemblyInfo.cs
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\c#debug\c#debug.AppHost\obj\Debug\net9.0\c#debug.AppHost.csproj.CoreCompileInputs.cache
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\c#debug\c#debug.AppHost\obj\Debug\net9.0\c#debug.AppHost.dll
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\c#debug\c#debug.AppHost\obj\Debug\net9.0\refint\c#debug.AppHost.dll
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\c#debug\c#debug.AppHost\obj\Debug\net9.0\c#debug.AppHost.pdb
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\c#debug\c#debug.AppHost\obj\Debug\net9.0\c#debug.AppHost.genruntimeconfig.cache
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\vs code files\newcsharp\c#debug\c#debug.AppHost\obj\Debug\net9.0\ref\c#debug.AppHost.dll
