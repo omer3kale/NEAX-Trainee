@@ -1,0 +1,14 @@
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\Exceptions101\bin\Debug\net9.0\Exceptions101.exe
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\Exceptions101\bin\Debug\net9.0\Exceptions101.deps.json
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\Exceptions101\bin\Debug\net9.0\Exceptions101.runtimeconfig.json
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\Exceptions101\bin\Debug\net9.0\Exceptions101.dll
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\Exceptions101\bin\Debug\net9.0\Exceptions101.pdb
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\Exceptions101\obj\Debug\net9.0\Exceptions101.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\Exceptions101\obj\Debug\net9.0\Exceptions101.AssemblyInfoInputs.cache
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\Exceptions101\obj\Debug\net9.0\Exceptions101.AssemblyInfo.cs
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\Exceptions101\obj\Debug\net9.0\Exceptions101.csproj.CoreCompileInputs.cache
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\Exceptions101\obj\Debug\net9.0\Exceptions101.dll
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\Exceptions101\obj\Debug\net9.0\refint\Exceptions101.dll
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\Exceptions101\obj\Debug\net9.0\Exceptions101.pdb
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\Exceptions101\obj\Debug\net9.0\Exceptions101.genruntimeconfig.cache
+C:\Users\ÖmerÜckale\OneDrive - NEA X GmbH\Desktop\Exceptions101\obj\Debug\net9.0\ref\Exceptions101.dll
