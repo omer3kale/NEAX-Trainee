@@ -1,0 +1,19 @@
+DetailScreen1:
+  DisplayForm:
+    DataSource: Accounts
+    Item: BrowseGallery.Selected
+    Fields:
+      - Account Name
+      - Main Phone
+      - Address 1: Street 1
+      - Address 1: City
+      - Address 1: State/Province
+      - Address 1: ZIP/Postal Code
+      - Address 1: Country/Region
+  Labels:
+    LblAppName2:
+      Text: "Companies"
+      Size: 28
+  Navigation:
+    BackButton:
+      OnSelect: Navigate(BrowseScreen, ScreenTransition.None)

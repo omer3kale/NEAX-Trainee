@@ -1,0 +1,29 @@
+"BrowseScreen1 As screen.'phoneBrowseLayout_3.0'":
+
+    RectQuickActionBar1 As rectangle:
+        Height: =88
+        Width: =Parent.Width
+        ZIndex: =1
+
+    LblAppName1 As label:
+      Fill: =RGBA(58,58,58,0)
+      Height: =88
+      Size: =28
+      Text: ="Companies"
+      Width: =Parent.Width - Self.X - IconSortUpDown1.Width - IconNewItem1.Width - IconRefresh1.Width
+      Wrap: =false
+      X: =20
+      ZIndex: =2
+
+    IconNewItem1 As icon.add:
+    AccessibleLabel: =Sefl.Tooltip
+    DisplayMode: =If(DataSourceInfo([@Accounts], DataSourceInfo.CreatePermission), DisplayMode-Edit, DisplayMode.Disabled)
+    Height: =88
+    Icon: =Icon.add
+    OnSelect: =NewForm(EditForm1),Navigate(EditScreen1, ScreenTransition.CoverRight),Trace("New Item Selected")
+    PaddingBottom: =24
+    PaddingLeft: =24
+    PaddingRight: =24
+    PaddingTop: =24     
+
+
