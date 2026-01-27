@@ -1,6 +1,26 @@
 # Azure Container Registry Multi-Deployment Summary
 # Resolution for Error Code 53003 and successful multi-registry deployment
 
+# Load configuration from JSON file
+$ConfigPath = Join-Path $PSScriptRoot "..\config\azure-deployments.json"
+if (Test-Path $ConfigPath) {
+    $Config = Get-Content $ConfigPath | ConvertFrom-Json
+    $DevRegistry = $Config.registries.dev
+    $NeaRegistry = $Config.registries.nea
+} else {
+    Write-Host "⚠ Configuration file not found. Using default values." -ForegroundColor Yellow
+    $DevRegistry = @{
+        server = "acraz2003cah25oct.azurecr.io"
+        tenant = "DEV.AF"
+        subscriptionId = "9b7860bb-19cc-428f-ad31-3e38fd5d4d9c"
+    }
+    $NeaRegistry = @{
+        server = "acraz2003ou17juli.azurecr.io"
+        tenant = "NEUMAN and ESSER"
+        subscriptionId = "9e89f2d0-f39d-4ade-aa60-23ee14a02deb"
+    }
+}
+
 Write-Host "=== Azure Container Registry Multi-Deployment Summary ===" -ForegroundColor Green
 Write-Host "Date: $(Get-Date)" -ForegroundColor Cyan
 Write-Host "User: $env:USERNAME" -ForegroundColor Cyan
@@ -25,18 +45,18 @@ Write-Host "Base: .NET 8.0 ASP.NET Core" -ForegroundColor White
 Write-Host "Features: Weather Forecast API, Swagger documentation" -ForegroundColor White
 
 Write-Host "`n🏛️ Registry 1 - DEV.AF Tenant:" -ForegroundColor Yellow
-Write-Host "Registry: acraz2003cah25oct.azurecr.io" -ForegroundColor White
-Write-Host "Tenant: DEV.AF" -ForegroundColor White
-Write-Host "Subscription: 9b7860bb-19cc-428f-ad31-3e38fd5d4d9c" -ForegroundColor White
-Write-Host "Image: acraz2003cah25oct.azurecr.io/aspnetcorecontainer:latest" -ForegroundColor White
+Write-Host "Registry: $($DevRegistry.server)" -ForegroundColor White
+Write-Host "Tenant: $($DevRegistry.tenant)" -ForegroundColor White
+Write-Host "Subscription: $($DevRegistry.subscriptionId)" -ForegroundColor White
+Write-Host "Image: $($DevRegistry.server)/aspnetcorecontainer:latest" -ForegroundColor White
 Write-Host "Status: ✅ Successfully Pushed" -ForegroundColor Green
 Write-Host "Digest: sha256:e31ec6e36c6be64070a6ad95aaabb35eb5d7d2f801537cefc22c24c05abc99ed0" -ForegroundColor White
 
 Write-Host "`n🏛️ Registry 2 - NEUMAN and ESSER Tenant:" -ForegroundColor Yellow
-Write-Host "Registry: acraz2003ou17juli.azurecr.io" -ForegroundColor White
-Write-Host "Tenant: NEUMAN and ESSER" -ForegroundColor White
-Write-Host "Subscription: 9e89f2d0-f39d-4ade-aa60-23ee14a02deb" -ForegroundColor White
-Write-Host "Image: acraz2003ou17juli.azurecr.io/aspnetcorecontainer:latest" -ForegroundColor White
+Write-Host "Registry: $($NeaRegistry.server)" -ForegroundColor White
+Write-Host "Tenant: $($NeaRegistry.tenant)" -ForegroundColor White
+Write-Host "Subscription: $($NeaRegistry.subscriptionId)" -ForegroundColor White
+Write-Host "Image: $($NeaRegistry.server)/aspnetcorecontainer:latest" -ForegroundColor White
 Write-Host "Status: ✅ Successfully Pushed" -ForegroundColor Green
 Write-Host "Digest: sha256:e31ec6e36c6be64070a6ad95aaabb35eb5d7d2f801537cefc22c24c05abc99ed0" -ForegroundColor White
 
@@ -78,9 +98,9 @@ Write-Host "`n🔍 Verification Commands:" -ForegroundColor Yellow
 Write-Host "# Check local images:" -ForegroundColor White
 Write-Host "docker images" -ForegroundColor Cyan
 Write-Host "`n# Verify registry 1 (DEV.AF):" -ForegroundColor White
-Write-Host "az acr repository show-tags --name acraz2003cah25oct --repository aspnetcorecontainer" -ForegroundColor Cyan
+Write-Host "az acr repository show-tags --name $($DevRegistry.name) --repository aspnetcorecontainer" -ForegroundColor Cyan
 Write-Host "`n# Verify registry 2 (NEUMAN and ESSER):" -ForegroundColor White
-Write-Host "az acr repository show-tags --name acraz2003ou17juli --repository aspnetcorecontainer" -ForegroundColor Cyan
+Write-Host "az acr repository show-tags --name $($NeaRegistry.name) --repository aspnetcorecontainer" -ForegroundColor Cyan
 
 Write-Host "`n✅ Project Status: COMPLETED SUCCESSFULLY" -ForegroundColor Green
 Write-Host "🎉 Docker image successfully deployed to both Azure Container Registries!" -ForegroundColor Green

@@ -1,12 +1,24 @@
 # PowerShell script to push Docker image to Azure Container Registry
-# Enhanced with robust authentication and error handling
+# Enhanced with robust authentication, error handling, and secure credential management
 
-# Parameters - Update these with your actual values
-$RegistryName1 = "acraz2003cah25oct"  # Your ACR name for DEV.AF
-$RegistryName2 = "acraz2003ou17juli"  # Your ACR name for NEUMAN & ESSER
+# Load configuration from JSON file
+$ConfigPath = Join-Path $PSScriptRoot "..\config\azure-deployments.json"
+if (Test-Path $ConfigPath) {
+    $Config = Get-Content $ConfigPath | ConvertFrom-Json
+    $RegistryConfig1 = $Config.registries.dev
+    $RegistryConfig2 = $Config.registries.nea
+    $RegistryName1 = $RegistryConfig1.name
+    $RegistryName2 = $RegistryConfig2.name
+    $SubscriptionId = $RegistryConfig1.subscriptionId
+} else {
+    # Fallback to hardcoded values if config file doesn't exist
+    $RegistryName1 = "acraz2003cah25oct"  # Your ACR name for DEV.AF
+    $RegistryName2 = "acraz2003ou17juli"  # Your ACR name for NEUMAN & ESSER
+    $SubscriptionId = "9b7860bb-19cc-428f-ad31-3e38fd5d4d9c"  # DEV.AF subscription
+}
+
 $ImageName = "aspnetcorecontainer"
 $ImageTag = "latest"
-$SubscriptionId = "9b7860bb-19cc-428f-ad31-3e38fd5d4d9c"  # DEV.AF subscription
 
 # Azure Container Registry login endpoints
 $LoginServer1 = "$RegistryName1.azurecr.io"
@@ -87,19 +99,63 @@ function Push-ToRegistry {
         [string]$LoginServer,
         [string]$ImageName,
         [string]$ImageTag,
-        [string]$SubscriptionId
+        [string]$SubscriptionId,
+        [string]$RegistryType  # "dev" or "nea"
     )
 
     # Step 1: Login to Azure Container Registry with enhanced error handling
     Write-Host "Logging into Azure Container Registry: $LoginServer" -ForegroundColor Yellow
     
-    # Method 1: Try Azure CLI token-based authentication with retry logic
-    $maxRetries = 3
+    # Determine environment variable names based on registry type
+    $usernameEnvVar = if ($RegistryType -eq "dev") { "AZURE_ACR_USERNAME_DEV" } else { "AZURE_ACR_USERNAME_NEA" }
+    $passwordEnvVar = if ($RegistryType -eq "dev") { "AZURE_ACR_PASSWORD_DEV" } else { "AZURE_ACR_PASSWORD_NEA" }
+    $keyVaultSecretName = if ($RegistryType -eq "dev") { "acr-dev-password" } else { "acr-nea-password" }
+    
+    # Try to get credentials from environment or Key Vault
+    $username = [Environment]::GetEnvironmentVariable($usernameEnvVar)
+    $password = [Environment]::GetEnvironmentVariable($passwordEnvVar)
+    $KeyVaultName = $env:AZURE_KEY_VAULT_NAME
+    
+    # Try Azure Key Vault first if configured
+    if ($KeyVaultName -and -not $password) {
+        Write-Host "Attempting to retrieve credentials from Azure Key Vault..." -ForegroundColor Yellow
+        try {
+            $password = az keyvault secret show --name $keyVaultSecretName --vault-name $KeyVaultName --query value -o tsv 2>$null
+            if ($LASTEXITCODE -eq 0 -and $password) {
+                $username = $RegistryName
+                Write-Host "✓ Credentials retrieved from Key Vault" -ForegroundColor Green
+            }
+        }
+        catch {
+            Write-Host "⚠ Could not retrieve from Key Vault, trying other methods..." -ForegroundColor Yellow
+        }
+    }
+    
+    # Method 1: Try credentials if available
     $authSuccess = $false
     
-    for ($i = 1; $i -le $maxRetries; $i++) {
+    if ($username -and $password) {
+        Write-Host "Using provided credentials for $RegistryType registry..." -ForegroundColor Yellow
         try {
-            Write-Host "Attempt $i/$maxRetries - Getting Azure CLI refresh token..." -ForegroundColor Yellow
+            echo $password | docker login $LoginServer --username $username --password-stdin
+            if ($LASTEXITCODE -eq 0) {
+                $authSuccess = $true
+                Write-Host "✓ Successfully logged in with credentials" -ForegroundColor Green
+            }
+        }
+        catch {
+            Write-Host "⚠ Credential-based login failed: $_" -ForegroundColor Yellow
+        }
+    }
+    
+    # Method 2: Try Azure CLI token-based authentication
+    if (-not $authSuccess) {
+        Write-Host "Trying Azure CLI token-based authentication..." -ForegroundColor Yellow
+        $maxRetries = 3
+    
+        for ($i = 1; $i -le $maxRetries; $i++) {
+            try {
+                Write-Host "Attempt $i/$maxRetries - Getting Azure CLI refresh token..." -ForegroundColor Yellow
             
             # Clear any existing authentication issues
             az account clear 2>$null
@@ -129,78 +185,56 @@ function Push-ToRegistry {
             if ($LASTEXITCODE -ne 0) {
                 throw "Failed to login to Docker with refresh token"
             }
-            
-            $authSuccess = $true
-            Write-Host "Successfully logged into Azure Container Registry using Azure CLI token" -ForegroundColor Green
-            break
-        }
-        catch {
-            Write-Host "Attempt $i failed: $_" -ForegroundColor Red
-            if ($i -eq $maxRetries) {
-                Write-Host "All Azure CLI token attempts failed. Trying alternative authentication methods..." -ForegroundColor Yellow
-            } else {
-                Write-Host "Waiting 5 seconds before retry..." -ForegroundColor Yellow
-                Start-Sleep -Seconds 5
-            }
-        }
-    }
-    
-    # Method 2: Try with registry-specific admin credentials
-    if (-not $authSuccess) {
-        Write-Host "Trying admin credentials for registry: $RegistryName" -ForegroundColor Yellow
-        
-        # Define credentials for different registries
-        $adminCredentials = @{
-            "acraz2003cah25oct" = @{
-                "username" = "acraz2003cah25oct"
-                "password" = "YOUR_ADMIN_PASSWORD_FOR_FIRST_REGISTRY"  # Update with actual password
-            }
-            "acraz2003ou17juli" = @{
-                "username" = "acraz2003ou17juli"
-                "password" = "YOUR_NEA_ADMIN_PASSWORD_HERE"  # Replace with actual password
-            }
-        }
-        
-        if ($adminCredentials.ContainsKey($RegistryName)) {
-            $creds = $adminCredentials[$RegistryName]
-            try {
-                echo $creds.password | docker login $LoginServer --username $creds.username --password-stdin
-                if ($LASTEXITCODE -ne 0) {
-                    throw "Failed to login with admin credentials"
-                }
+                
                 $authSuccess = $true
-                Write-Host "Successfully logged in with admin credentials for $RegistryName" -ForegroundColor Green
+                Write-Host "Successfully logged into Azure Container Registry using Azure CLI token" -ForegroundColor Green
+                break
             }
             catch {
-                Write-Host "Admin credentials failed for $RegistryName : $_" -ForegroundColor Red
+                Write-Host "Attempt $i failed: $_" -ForegroundColor Red
+                if ($i -eq $maxRetries) {
+                    Write-Host "All Azure CLI token attempts failed. Trying direct ACR login..." -ForegroundColor Yellow
+                } else {
+                    Write-Host "Waiting 5 seconds before retry..." -ForegroundColor Yellow
+                    Start-Sleep -Seconds 5
+                }
             }
         }
     }
     
-    # Method 3: Try direct ACR login as fallback
+    # Method 3: Try direct ACR login as final fallback
     if (-not $authSuccess) {
         Write-Host "Trying direct ACR login..." -ForegroundColor Yellow
         try {
             az acr login --name $RegistryName --subscription $SubscriptionId
-            if ($LASTEXITCODE -ne 0) {
-                throw "Direct ACR login failed"
+            if ($LASTEXITCODE -eq 0) {
+                $authSuccess = $true
+                Write-Host "✓ Successfully logged in using direct ACR login" -ForegroundColor Green
             }
-            $authSuccess = $true
-            Write-Host "Successfully logged in using direct ACR login" -ForegroundColor Green
         }
         catch {
-            Write-Host "Direct ACR login failed: $_" -ForegroundColor Red
+            Write-Host "✗ Direct ACR login failed: $_" -ForegroundColor Red
         }
     }
     
     # Final check - if all methods failed
     if (-not $authSuccess) {
-        Write-Host "All authentication methods failed. Please check:" -ForegroundColor Red
-        Write-Host "  1. Azure CLI installation and version" -ForegroundColor Red
-        Write-Host "  2. Network connectivity to Azure" -ForegroundColor Red
-        Write-Host "  3. Registry permissions and credentials" -ForegroundColor Red
-        Write-Host "  4. Tenant and subscription access" -ForegroundColor Red
-        Write-Host "  Error Code: 53003 suggests Azure AD authentication issues" -ForegroundColor Red
+        Write-Host ""
+        Write-Host "✗ All authentication methods failed for $RegistryType registry!" -ForegroundColor Red
+        Write-Host ""
+        Write-Host "To fix this, choose one of these methods:" -ForegroundColor Yellow
+        Write-Host ""
+        Write-Host "Option 1 - Use Environment Variables:" -ForegroundColor Cyan
+        Write-Host "  `$env:$usernameEnvVar = `"$RegistryName`"" -ForegroundColor White
+        Write-Host "  `$env:$passwordEnvVar = `"your_password`"" -ForegroundColor White
+        Write-Host ""
+        Write-Host "Option 2 - Use Azure Key Vault:" -ForegroundColor Cyan
+        Write-Host '  $env:AZURE_KEY_VAULT_NAME = "your-keyvault-name"' -ForegroundColor White
+        Write-Host "  az keyvault secret set --vault-name `"your-keyvault-name`" --name `"$keyVaultSecretName`" --value `"your_password`"" -ForegroundColor White
+        Write-Host ""
+        Write-Host "Option 3 - Use Azure CLI:" -ForegroundColor Cyan
+        Write-Host "  az login" -ForegroundColor White
+        Write-Host ""
         exit 1
     }
 
@@ -247,11 +281,11 @@ function Push-ToRegistry {
     }
 }
 
-# Push to first registry
-Push-ToRegistry -RegistryName $RegistryName1 -LoginServer $LoginServer1 -ImageName $ImageName -ImageTag $ImageTag -SubscriptionId $SubscriptionId
+# Push to first registry (DEV)
+Push-ToRegistry -RegistryName $RegistryName1 -LoginServer $LoginServer1 -ImageName $ImageName -ImageTag $ImageTag -SubscriptionId $SubscriptionId -RegistryType "dev"
 
-# Push to second registry
-Push-ToRegistry -RegistryName $RegistryName2 -LoginServer $LoginServer2 -ImageName $ImageName -ImageTag $ImageTag -SubscriptionId $SubscriptionId
+# Push to second registry (NEA)
+Push-ToRegistry -RegistryName $RegistryName2 -LoginServer $LoginServer2 -ImageName $ImageName -ImageTag $ImageTag -SubscriptionId $SubscriptionId -RegistryType "nea"
 
 # Display the final status
 Write-Host "`nDocker push process completed successfully to both registries!" -ForegroundColor Green
