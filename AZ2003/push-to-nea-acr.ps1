@@ -53,9 +53,9 @@ $authSuccess = $false
 if ($username -and $password) {
     Write-Host "Using provided credentials..." -ForegroundColor Yellow
     try {
-        # Note: Using echo with password-stdin is the recommended method by Docker
-        # The password is only visible in the process arguments briefly during execution
-        # For maximum security, use Azure CLI authentication instead (Method 2)
+        # Note: Using password-stdin is Docker's recommended method for automated authentication
+        # While the password is briefly visible in process arguments, this is unavoidable with docker CLI
+        # For maximum security without passwords, use Azure CLI authentication (Method 2 below)
         echo $password | docker login $LoginServer --username $username --password-stdin
         if ($LASTEXITCODE -eq 0) {
             $authSuccess = $true

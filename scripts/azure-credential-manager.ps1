@@ -155,10 +155,14 @@ function Set-AzureCredentials {
     )
     
     # Set environment variables
+    # Note: Environment variables store passwords in plain text but are user-scoped
+    # For production, use Azure Key Vault instead
     [Environment]::SetEnvironmentVariable($config.UsernameEnvVar, $username, "User")
     [Environment]::SetEnvironmentVariable($config.PasswordEnvVar, $passwordPlain, "User")
     
     # Clear the plain text password from memory
+    # Note: GC.Collect() requests garbage collection but doesn't guarantee immediate clearing
+    # This is a best-effort approach to minimize password exposure time
     $passwordPlain = $null
     [System.GC]::Collect()
     

@@ -92,6 +92,8 @@ if ($Action -eq "Encrypt") {
     $encrypted = Encrypt-String -PlainText $PlainText
     
     # Clear sensitive data from memory
+    # Note: GC.Collect() requests garbage collection but doesn't guarantee immediate clearing
+    # This is a best-effort approach to minimize password exposure time
     $PlainText = $null
     [System.GC]::Collect()
     
