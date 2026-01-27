@@ -92,6 +92,9 @@ try {
     # Return the secret
     if ($AsPlainText) {
         Write-Host ""
+        Write-Host "⚠️  WARNING: Displaying secret in plain text!" -ForegroundColor Red
+        Write-Host "This may be visible in terminal history or logs." -ForegroundColor Yellow
+        Write-Host ""
         Write-Host "Secret Value:" -ForegroundColor Yellow
         Write-Host $secret -ForegroundColor Cyan
         Write-Host ""

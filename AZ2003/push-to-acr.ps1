@@ -137,6 +137,9 @@ function Push-ToRegistry {
     if ($username -and $password) {
         Write-Host "Using provided credentials for $RegistryType registry..." -ForegroundColor Yellow
         try {
+            # Note: Using echo with password-stdin is the recommended method by Docker
+            # The password is only visible in the process arguments briefly during execution
+            # For maximum security, use Azure CLI authentication instead (Method 2)
             echo $password | docker login $LoginServer --username $username --password-stdin
             if ($LASTEXITCODE -eq 0) {
                 $authSuccess = $true

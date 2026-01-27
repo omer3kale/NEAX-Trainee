@@ -158,6 +158,10 @@ function Set-AzureCredentials {
     [Environment]::SetEnvironmentVariable($config.UsernameEnvVar, $username, "User")
     [Environment]::SetEnvironmentVariable($config.PasswordEnvVar, $passwordPlain, "User")
     
+    # Clear the plain text password from memory
+    $passwordPlain = $null
+    [System.GC]::Collect()
+    
     Write-Success "Credentials saved to user environment variables"
     Write-Warning "Restart PowerShell to use the new credentials"
 }

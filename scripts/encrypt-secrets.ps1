@@ -91,6 +91,10 @@ if ($Action -eq "Encrypt") {
     Write-Info "Encrypting text..."
     $encrypted = Encrypt-String -PlainText $PlainText
     
+    # Clear sensitive data from memory
+    $PlainText = $null
+    [System.GC]::Collect()
+    
     if ($OutputFile) {
         $encrypted | Out-File -FilePath $OutputFile -NoNewline
         Write-Success "Encrypted text saved to: $OutputFile"
