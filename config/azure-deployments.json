@@ -1,0 +1,65 @@
+{
+  "description": "Azure Container Registry deployment configurations for NEAX-Trainee project",
+  "version": "1.0.0",
+  "registries": {
+    "dev": {
+      "name": "acraz2003cah25oct",
+      "server": "acraz2003cah25oct.azurecr.io",
+      "tenant": "DEV.AF",
+      "subscriptionId": "9b7860bb-19cc-428f-ad31-3e38fd5d4d9c",
+      "location": "westeurope",
+      "resourceGroup": "rg-dev-acr",
+      "environmentVariables": {
+        "username": "AZURE_ACR_USERNAME_DEV",
+        "password": "AZURE_ACR_PASSWORD_DEV",
+        "server": "AZURE_ACR_SERVER_DEV"
+      },
+      "keyVaultSecrets": {
+        "password": "acr-dev-password"
+      }
+    },
+    "nea": {
+      "name": "acraz2003ou17juli",
+      "server": "acraz2003ou17juli.azurecr.io",
+      "tenant": "NEUMAN and ESSER",
+      "subscriptionId": "9e89f2d0-f39d-4ade-aa60-23ee14a02deb",
+      "location": "westeurope",
+      "resourceGroup": "rg-nea-acr",
+      "environmentVariables": {
+        "username": "AZURE_ACR_USERNAME_NEA",
+        "password": "AZURE_ACR_PASSWORD_NEA",
+        "server": "AZURE_ACR_SERVER_NEA"
+      },
+      "keyVaultSecrets": {
+        "password": "acr-nea-password"
+      }
+    }
+  },
+  "deploymentDefaults": {
+    "imageName": "aspnetcorecontainer",
+    "imageTag": "latest",
+    "authenticationMethods": [
+      "AzureKeyVault",
+      "EnvironmentVariables",
+      "AzureCLI"
+    ],
+    "retryAttempts": 3,
+    "retryDelaySeconds": 5
+  },
+  "security": {
+    "recommendations": [
+      "Use Azure Key Vault for production deployments",
+      "Rotate ACR admin passwords regularly",
+      "Enable Azure AD authentication when possible",
+      "Use managed identities for automated deployments",
+      "Enable Azure Container Registry firewall rules",
+      "Enable vulnerability scanning on pushed images"
+    ],
+    "notes": [
+      "Subscription IDs and registry names are not sensitive data",
+      "ACR admin passwords should never be committed to version control",
+      "Use service principals with minimal required permissions",
+      "Enable audit logging for all ACR operations"
+    ]
+  }
+}
